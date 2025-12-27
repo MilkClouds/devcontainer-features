@@ -7,5 +7,14 @@
             }
         },
         "remoteUser": "vscode"
+    },
+    "multi-tools": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "./python-tools": {
+                "tools": "tqdm ruff"
+            }
+        },
+        "remoteUser": "vscode"
     }
 }
