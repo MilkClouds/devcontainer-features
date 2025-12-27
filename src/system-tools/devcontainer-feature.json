@@ -1,0 +1,23 @@
+{
+  "id": "system-tools",
+  "version": "0.1.0",
+  "name": "System tools",
+  "description": "Create a dev user and install base OS packages.",
+  "options": {
+    "username": {
+      "type": "string",
+      "default": "vscode",
+      "description": "Username to create"
+    },
+    "userUid": {
+      "type": "string",
+      "default": "1000",
+      "description": "User UID"
+    },
+    "userGid": {
+      "type": "string",
+      "default": "1000",
+      "description": "User GID"
+    }
+  }
+}
