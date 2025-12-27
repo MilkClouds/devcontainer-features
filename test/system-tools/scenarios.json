@@ -4,7 +4,7 @@
         "features": {
             "ghcr.io/MilkClouds/devcontainer-features/system-tools": {
                 "packages": "ripgrep",
-                "excludePackages": "x11-apps"
+                "excludePackages": "x11-apps xauth"
             }
         },
         "remoteUser": "vscode"
