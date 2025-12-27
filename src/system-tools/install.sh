@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-USERNAME="${USERNAME:-vscode}"
+USERNAME="${USERNAME:-${_REMOTE_USER:-vscode}}"
 USER_UID="${USER_UID:-${USERUID:-1000}}"
 USER_GID="${USER_GID:-${USERGID:-1000}}"
 
@@ -112,8 +112,12 @@ if [ -n "$extra_packages" ]; then
 fi
 
 # Generate locale and configure sudoers
-locale-gen en_US.UTF-8
-usermod -aG sudo "$USERNAME"
+if command -v locale-gen >/dev/null 2>&1; then
+    locale-gen en_US.UTF-8
+fi
+if getent group sudo >/dev/null 2>&1; then
+    usermod -aG sudo "$USERNAME"
+fi
 echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/$USERNAME"
 chmod 0440 "/etc/sudoers.d/$USERNAME"
 
