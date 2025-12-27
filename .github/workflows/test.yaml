@@ -13,9 +13,9 @@ jobs:
     strategy:
       matrix:
         features:
-          - system-tools
-          - python-tools
-          - zsh-setup
+          - ./system-tools
+          - ./python-tools
+          - ./zsh-setup
         baseImage:
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:
@@ -33,9 +33,9 @@ jobs:
     strategy:
       matrix:
         features:
-          - system-tools
-          - python-tools
-          - zsh-setup
+          - ./system-tools
+          - ./python-tools
+          - ./zsh-setup
     steps:
       - uses: actions/checkout@v4
 

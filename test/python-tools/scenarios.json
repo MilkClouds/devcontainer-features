@@ -2,7 +2,7 @@
     "ruff-only": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "python-tools": {
+            "./python-tools": {
                 "tools": "ruff"
             }
         },

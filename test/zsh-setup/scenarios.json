@@ -2,7 +2,7 @@
     "custom-theme": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "zsh-setup": {
+            "./zsh-setup": {
                 "theme": "robbyrussell",
                 "plugins": "git"
             }
