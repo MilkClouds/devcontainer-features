@@ -1,6 +1,6 @@
 {
   "id": "system-tools",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "name": "System tools",
   "description": "Create a dev user and install base OS packages.",
   "options": {

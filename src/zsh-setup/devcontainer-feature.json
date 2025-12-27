@@ -1,6 +1,6 @@
 {
   "id": "zsh-setup",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "name": "Zsh setup",
   "description": "Configure zsh, oh-my-zsh, conda, and custom aliases.",
   "options": {

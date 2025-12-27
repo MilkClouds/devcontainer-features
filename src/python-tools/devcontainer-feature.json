@@ -1,6 +1,6 @@
 {
   "id": "python-tools",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "name": "Python CLI tools",
   "description": "Install uv and Python-based CLI tools.",
   "options": {
