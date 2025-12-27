@@ -1,0 +1,13 @@
+{
+    "full-stack": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "ghcr.io/MilkClouds/devcontainer-features/system-tools:0.1.0": {},
+            "ghcr.io/MilkClouds/devcontainer-features/python-tools:0.1.0": {
+                "tools": "tqdm"
+            },
+            "ghcr.io/MilkClouds/devcontainer-features/zsh-setup:0.1.0": {}
+        },
+        "remoteUser": "vscode"
+    }
+}

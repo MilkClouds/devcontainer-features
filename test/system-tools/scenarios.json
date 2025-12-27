@@ -2,7 +2,7 @@
     "custom-packages": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "./system-tools": {
+            "ghcr.io/MilkClouds/devcontainer-features/system-tools:0.1.0": {
                 "packages": "ripgrep",
                 "excludePackages": "x11-apps"
             }
