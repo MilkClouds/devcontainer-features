@@ -8,6 +8,16 @@
       "type": "string",
       "default": "vscode",
       "description": "Username to configure"
+    },
+    "theme": {
+      "type": "string",
+      "default": "agnoster",
+      "description": "Oh My Zsh theme name"
+    },
+    "plugins": {
+      "type": "string",
+      "default": "git zsh-autosuggestions zsh-syntax-highlighting",
+      "description": "Space/comma-separated list of Oh My Zsh plugins to enable"
     }
   },
   "installsAfter": [

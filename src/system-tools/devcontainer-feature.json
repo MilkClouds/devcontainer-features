@@ -18,6 +18,11 @@
       "type": "string",
       "default": "1000",
       "description": "User GID"
+    },
+    "packages": {
+      "type": "string",
+      "default": "",
+      "description": "Additional apt packages to install (space/comma-separated)"
     }
   }
 }

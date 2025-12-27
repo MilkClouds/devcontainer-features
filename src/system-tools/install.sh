@@ -92,6 +92,13 @@ apt-get install -y --no-install-recommends \
 apt-get install -y --no-install-recommends \
     x11-apps xauth
 
+# Install optional extra packages
+extra_packages="${PACKAGES:-}"
+if [ -n "$extra_packages" ]; then
+    extra_packages="$(printf "%s\n" "$extra_packages" | tr "," " ")"
+    apt-get install -y --no-install-recommends $extra_packages
+fi
+
 # Generate locale and configure sudoers
 locale-gen en_US.UTF-8
 usermod -aG sudo "$USERNAME"
