@@ -17,7 +17,8 @@ has_token() {
 }
 
 if ! command -v uv >/dev/null 2>&1; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh -s -- -b "$HOME/.local/bin"
+    XDG_BIN_HOME="$HOME/.local/bin" UV_NO_MODIFY_PATH=1 \
+        curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
 tool_list="${TOOLS:-}"

@@ -16,6 +16,6 @@
     }
   },
   "installsAfter": [
-    "system-tools"
+    "./system-tools"
   ]
 }
