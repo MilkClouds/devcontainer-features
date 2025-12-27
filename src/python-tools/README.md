@@ -16,7 +16,7 @@ Install uv and Python-based CLI tools.
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | username | Username to configure | string | vscode |
-| tools | Explicit space/comma-separated list of uv tools to install. When empty, installs the default set. | string | - |
+| tools | Explicit space/comma-separated list of uv tools to install. | string | glances gpustat ruff tqdm ty |
 
 
 
