@@ -11,6 +11,7 @@
     }
   },
   "installsAfter": [
-    "system-tools"
+    "system-tools",
+    "python-tools"
   ]
 }

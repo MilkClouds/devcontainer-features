@@ -1,0 +1,21 @@
+{
+  "id": "python-tools",
+  "version": "0.1.0",
+  "name": "Python CLI tools",
+  "description": "Install uv and Python-based CLI tools.",
+  "options": {
+    "username": {
+      "type": "string",
+      "default": "vscode",
+      "description": "Username to configure"
+    },
+    "tools": {
+      "type": "string",
+      "default": "",
+      "description": "Explicit space/comma-separated list of uv tools to install. When empty, installs the default set."
+    }
+  },
+  "installsAfter": [
+    "system-tools"
+  ]
+}
