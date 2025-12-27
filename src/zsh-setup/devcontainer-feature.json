@@ -20,5 +20,8 @@
       "description": "Space/comma-separated list of Oh My Zsh plugins to enable"
     }
   },
-  "installsAfter": []
+  "installsAfter": [
+    "ghcr.io/MilkClouds/devcontainer-features/system-tools",
+    "ghcr.io/MilkClouds/devcontainer-features/python-tools"
+  ]
 }
