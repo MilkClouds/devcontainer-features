@@ -5,7 +5,7 @@ alias docker-ubuntu="docker run -it --rm -v .:/workspace -w /workspace ubuntu:la
 
 alias wget_="aria2c -s 16 -x 16"
 alias cp_='rsync -a --partial --info=progress2'
-alias mv_='rsync -a --partial --info=progress2 -remove-source-files'
+alias mv_='rsync -a --partial --info=progress2 --remove-source-files'
 rm_() {
     for target in "$@"; do
         [ -e "$target" ] && find "$target" -delete -print | tqdm --desc "Deleting $target" --unit files > /dev/null

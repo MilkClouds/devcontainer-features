@@ -12,30 +12,51 @@ export DEBIAN_FRONTEND=noninteractive
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
-# Create or rename group
-existing_group="$(getent group "$USER_GID" | cut -d: -f1)"
-if [ -n "$existing_group" ]; then
-    if [ "$existing_group" != "$USERNAME" ]; then
-        echo "Renaming existing group: $existing_group (GID: $USER_GID) -> $USERNAME"
-        groupmod -n "$USERNAME" "$existing_group"
+# Create or update group
+group_by_name_gid="$(getent group "$USERNAME" | cut -d: -f3)"
+group_by_gid_name="$(getent group "$USER_GID" | cut -d: -f1)"
+if [ -n "$group_by_name_gid" ]; then
+    if [ "$group_by_name_gid" != "$USER_GID" ]; then
+        if [ -n "$group_by_gid_name" ] && [ "$group_by_gid_name" != "$USERNAME" ]; then
+            echo "Group name $USERNAME exists with GID $group_by_name_gid, but GID $USER_GID is owned by $group_by_gid_name" >&2
+            exit 1
+        fi
+        echo "Updating group $USERNAME GID: $group_by_name_gid -> $USER_GID"
+        groupmod -g "$USER_GID" "$USERNAME"
     else
         echo "Group $USERNAME (GID: $USER_GID) already exists"
     fi
+elif [ -n "$group_by_gid_name" ]; then
+    echo "Renaming existing group: $group_by_gid_name (GID: $USER_GID) -> $USERNAME"
+    groupmod -n "$USERNAME" "$group_by_gid_name"
 else
     groupadd -g "$USER_GID" "$USERNAME"
 fi
 
-# Create or rename user
-existing_user="$(getent passwd "$USER_UID" | cut -d: -f1)"
-if [ -n "$existing_user" ]; then
-    if [ "$existing_user" != "$USERNAME" ]; then
-        echo "Renaming existing user: $existing_user (UID: $USER_UID) -> $USERNAME"
-        usermod -l "$USERNAME" "$existing_user"
-        usermod -d "/home/$USERNAME" -m "$USERNAME"
-        usermod -g "$USER_GID" "$USERNAME"
+# Create or update user
+user_by_name_uid="$(getent passwd "$USERNAME" | cut -d: -f3)"
+user_by_uid_name="$(getent passwd "$USER_UID" | cut -d: -f1)"
+if [ -n "$user_by_name_uid" ]; then
+    if [ "$user_by_name_uid" != "$USER_UID" ]; then
+        if [ -n "$user_by_uid_name" ] && [ "$user_by_uid_name" != "$USERNAME" ]; then
+            echo "User name $USERNAME exists with UID $user_by_name_uid, but UID $USER_UID is owned by $user_by_uid_name" >&2
+            exit 1
+        fi
+        echo "Updating user $USERNAME UID: $user_by_name_uid -> $USER_UID"
+        usermod -u "$USER_UID" "$USERNAME"
     else
         echo "User $USERNAME (UID: $USER_UID) already exists"
     fi
+    usermod -g "$USER_GID" "$USERNAME"
+    current_home="$(getent passwd "$USERNAME" | cut -d: -f6)"
+    if [ "$current_home" != "/home/$USERNAME" ]; then
+        usermod -d "/home/$USERNAME" -m "$USERNAME"
+    fi
+elif [ -n "$user_by_uid_name" ]; then
+    echo "Renaming existing user: $user_by_uid_name (UID: $USER_UID) -> $USERNAME"
+    usermod -l "$USERNAME" "$user_by_uid_name"
+    usermod -d "/home/$USERNAME" -m "$USERNAME"
+    usermod -g "$USER_GID" "$USERNAME"
 else
     useradd -m -s /bin/bash -u "$USER_UID" -g "$USER_GID" "$USERNAME"
 fi
