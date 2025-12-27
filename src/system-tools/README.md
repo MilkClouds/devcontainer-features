@@ -18,8 +18,8 @@ Create a dev user and install base OS packages.
 | username | Username to create | string | vscode |
 | userUid | User UID | string | 1000 |
 | userGid | User GID | string | 1000 |
-| packages | Additional apt packages to install (space/comma-separated) | string | - |
-| excludePackages | Apt packages to skip from the default install list (space/comma-separated) | string | - |
+| packages | Additional apt packages to install (space/comma-separated). See src/system-tools/install.sh for the default package list. | string | - |
+| excludePackages | Apt packages to skip from the default install list (space/comma-separated). See src/system-tools/install.sh for the default package list. | string | - |
 
 
 
