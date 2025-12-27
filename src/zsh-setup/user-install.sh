@@ -3,11 +3,24 @@ set -e
 
 export RUNZSH=no CHSH=no
 
+normalize_list() {
+  printf "%s\n" "$1" | tr "," " "
+}
+
+has_token() {
+  local haystack="$1"
+  local needle="$2"
+  for token in $haystack; do
+    [ "$token" = "$needle" ] && return 0
+  done
+  return 1
+}
+
 plugin_list="${PLUGINS:-}"
 if [ -z "$plugin_list" ]; then
   plugin_list="git zsh-autosuggestions zsh-syntax-highlighting"
 else
-  plugin_list="$(printf "%s\n" "$plugin_list" | tr "," " ")"
+  plugin_list="$(normalize_list "$plugin_list")"
 fi
 theme_name="${THEME:-agnoster}"
 
@@ -18,12 +31,12 @@ fi
 
 # Ensure custom plugins directory exists
 mkdir -p ~/.oh-my-zsh/custom/plugins
-if echo "$plugin_list" | tr " " "\n" | grep -qx "zsh-autosuggestions"; then
+if has_token "$plugin_list" "zsh-autosuggestions"; then
   if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
     git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
   fi
 fi
-if echo "$plugin_list" | tr " " "\n" | grep -qx "zsh-syntax-highlighting"; then
+if has_token "$plugin_list" "zsh-syntax-highlighting"; then
   if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
     git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
   fi

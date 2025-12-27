@@ -5,6 +5,24 @@ USERNAME="${USERNAME:-${_REMOTE_USER:-vscode}}"
 USER_UID="${USER_UID:-${USERUID:-1000}}"
 USER_GID="${USER_GID:-${USERGID:-1000}}"
 
+fail() {
+    echo "$1" >&2
+    exit 1
+}
+
+normalize_list() {
+    printf "%s\n" "$1" | tr "," " "
+}
+
+has_token() {
+    local haystack="$1"
+    local needle="$2"
+    for token in $haystack; do
+        [ "$token" = "$needle" ] && return 0
+    done
+    return 1
+}
+
 echo "Setting up devcontainer for user: $USERNAME (UID: $USER_UID, GID: $USER_GID)"
 
 # Set locale and environment
@@ -18,8 +36,7 @@ group_by_gid_name="$(getent group "$USER_GID" | cut -d: -f1)"
 if [ -n "$group_by_name_gid" ]; then
     if [ "$group_by_name_gid" != "$USER_GID" ]; then
         if [ -n "$group_by_gid_name" ] && [ "$group_by_gid_name" != "$USERNAME" ]; then
-            echo "Group name $USERNAME exists with GID $group_by_name_gid, but GID $USER_GID is owned by $group_by_gid_name" >&2
-            exit 1
+            fail "Group name $USERNAME exists with GID $group_by_name_gid, but GID $USER_GID is owned by $group_by_gid_name"
         fi
         echo "Updating group $USERNAME GID: $group_by_name_gid -> $USER_GID"
         groupmod -g "$USER_GID" "$USERNAME"
@@ -39,8 +56,7 @@ user_by_uid_name="$(getent passwd "$USER_UID" | cut -d: -f1)"
 if [ -n "$user_by_name_uid" ]; then
     if [ "$user_by_name_uid" != "$USER_UID" ]; then
         if [ -n "$user_by_uid_name" ] && [ "$user_by_uid_name" != "$USERNAME" ]; then
-            echo "User name $USERNAME exists with UID $user_by_name_uid, but UID $USER_UID is owned by $user_by_uid_name" >&2
-            exit 1
+            fail "User name $USERNAME exists with UID $user_by_name_uid, but UID $USER_UID is owned by $user_by_uid_name"
         fi
         echo "Updating user $USERNAME UID: $user_by_name_uid -> $USER_UID"
         usermod -u "$USER_UID" "$USERNAME"
@@ -68,19 +84,12 @@ passwd -d "$USERNAME" || true
 # Update package lists
 apt-get update
 
-exclude_packages="${EXCLUDE_PACKAGES:-}"
-exclude_packages="$(printf "%s\n" "$exclude_packages" | tr "," " ")"
-should_skip_package() {
-    local pkg="$1"
-    for excluded in $exclude_packages; do
-        [ "$pkg" = "$excluded" ] && return 0
-    done
-    return 1
-}
+exclude_packages="$(normalize_list "${EXCLUDE_PACKAGES:-}")"
 install_packages() {
     local selected=()
+    local pkg
     for pkg in "$@"; do
-        if ! should_skip_package "$pkg"; then
+        if ! has_token "$exclude_packages" "$pkg"; then
             selected+=("$pkg")
         fi
     done
@@ -105,9 +114,8 @@ install_packages build-essential libssl-dev zlib1g-dev libffi-dev libreadline-de
 install_packages x11-apps xauth
 
 # Install optional extra packages
-extra_packages="${PACKAGES:-}"
+extra_packages="$(normalize_list "${PACKAGES:-}")"
 if [ -n "$extra_packages" ]; then
-    extra_packages="$(printf "%s\n" "$extra_packages" | tr "," " ")"
     install_packages $extra_packages
 fi
 
