@@ -18,4 +18,5 @@ if ! command -v curl >/dev/null 2>&1; then
     apt-get install -y --no-install-recommends curl ca-certificates
 fi
 
-su - "$USERNAME" -c "bash -lc '$script_dir/user-install.sh'"
+tools_env="${TOOLS:-}"
+su - "$USERNAME" -c "TOOLS=$(printf '%q' "$tools_env") bash -lc '$script_dir/user-install.sh'"

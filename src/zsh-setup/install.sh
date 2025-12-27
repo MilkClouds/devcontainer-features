@@ -41,4 +41,6 @@ install -d -m 0755 "$user_home/.devcontainer"
 install -m 0644 "$script_dir/aliases.sh" "$user_home/.devcontainer/aliases.sh"
 chown -R "$USERNAME:$USERNAME" "$user_home/.devcontainer"
 
-su - "$USERNAME" -c "bash -lc '$script_dir/user-install.sh'"
+theme_env="${THEME:-}"
+plugins_env="${PLUGINS:-}"
+su - "$USERNAME" -c "THEME=$(printf '%q' "$theme_env") PLUGINS=$(printf '%q' "$plugins_env") bash -lc '$script_dir/user-install.sh'"
