@@ -1,13 +1,22 @@
 #!/bin/bash
 set -e
 
-USERNAME="${USERNAME:-vscode}"
+USERNAME="${USERNAME:-${_REMOTE_USER:-vscode}}"
 
 # Resolve home directory for the target user.
 user_home="$(getent passwd "$USERNAME" | cut -d: -f6)"
 if [ -z "$user_home" ]; then
-    echo "User $USERNAME not found."
+    echo "User $USERNAME not found. Ensure the user is created before running this feature." >&2
     exit 1
+fi
+if [ ! -d "$user_home" ]; then
+    echo "Home directory $user_home for $USERNAME does not exist." >&2
+    exit 1
+fi
+if ! command -v zsh >/dev/null 2>&1; then
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get install -y --no-install-recommends zsh
 fi
 
 feature_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

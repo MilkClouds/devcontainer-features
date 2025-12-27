@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-USERNAME="${USERNAME:-vscode}"
+USERNAME="${USERNAME:-${_REMOTE_USER:-vscode}}"
 
 user_home="$(getent passwd "$USERNAME" | cut -d: -f6)"
 if [ -z "$user_home" ]; then
