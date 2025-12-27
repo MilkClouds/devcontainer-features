@@ -1,0 +1,13 @@
+{
+    "full-stack": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "system-tools": {},
+            "python-tools": {
+                "tools": "tqdm"
+            },
+            "zsh-setup": {}
+        },
+        "remoteUser": "vscode"
+    }
+}

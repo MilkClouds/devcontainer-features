@@ -13,11 +13,10 @@ jobs:
     strategy:
       matrix:
         features:
-          - color
-          - hello
+          - system-tools
+          - python-tools
+          - zsh-setup
         baseImage:
-          - debian:latest
-          - ubuntu:latest
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +25,7 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: "Generating tests for '${{ matrix.features }}' against '${{ matrix.baseImage }}'"
-        run: devcontainer features test --skip-scenarios -f ${{ matrix.features }} -i ${{ matrix.baseImage }} .
+        run: devcontainer features test --skip-scenarios -f ${{ matrix.features }} -i ${{ matrix.baseImage }} --remote-user vscode .
 
   test-scenarios:
     runs-on: ubuntu-latest
@@ -34,8 +33,9 @@ jobs:
     strategy:
       matrix:
         features:
-          - color
-          - hello
+          - system-tools
+          - python-tools
+          - zsh-setup
     steps:
       - uses: actions/checkout@v4
 

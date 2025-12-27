@@ -6,48 +6,53 @@
 
 ## Example Contents
 
-This repository contains a _collection_ of two Features - `hello` and `color`. These Features serve as simple feature implementations.  Each sub-section below shows a sample `devcontainer.json` alongside example usage of the Feature.
+This repository contains a _collection_ of Features focused on base system setup and shell tooling.
 
-### `hello`
+### `system-tools`
 
-Running `hello` inside the built container will print the greeting provided to it via its `greeting` option.
-
-```jsonc
-{
-    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-    "features": {
-        "ghcr.io/devcontainers/feature-starter/hello:1": {
-            "greeting": "Hello"
-        }
-    }
-}
-```
-
-```bash
-$ hello
-
-Hello, user.
-```
-
-### `color`
-
-Running `color` inside the built container will print your favorite color to standard out.
+Create a dev user and install base OS packages, with optional package inclusion/exclusion.
 
 ```jsonc
 {
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-        "ghcr.io/devcontainers/feature-starter/color:1": {
-            "favorite": "green"
+        "ghcr.io/devcontainers/feature-starter/system-tools:1": {
+            "packages": "fzf ripgrep",
+            "excludePackages": "x11-apps,xauth"
         }
     }
 }
 ```
 
-```bash
-$ color
+### `python-tools`
 
-my favorite color is green
+Install uv and an explicit list of Python CLI tools.
+
+```jsonc
+{
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/feature-starter/python-tools:1": {
+            "tools": "tqdm ruff ty"
+        }
+    }
+}
+```
+
+### `zsh-setup`
+
+Configure zsh, Oh My Zsh, and custom aliases.
+
+```jsonc
+{
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/feature-starter/zsh-setup:1": {
+            "theme": "agnoster",
+            "plugins": "git zsh-autosuggestions zsh-syntax-highlighting"
+        }
+    }
+}
 ```
 
 ## Repo and Feature Structure
@@ -74,36 +79,7 @@ An [implementing tool](https://containers.dev/supporting#tools) will composite [
 
 All available options for a Feature should be declared in the `devcontainer-feature.json`.  The syntax for the `options` property can be found in the [devcontainer Feature json properties reference](https://containers.dev/implementors/features/#devcontainer-feature-json-properties).
 
-For example, the `color` feature provides an enum of three possible options (`red`, `gold`, `green`).  If no option is provided in a user's `devcontainer.json`, the value is set to "red".
-
-```jsonc
-{
-    // ...
-    "options": {
-        "favorite": {
-            "type": "string",
-            "enum": [
-                "red",
-                "gold",
-                "green"
-            ],
-            "default": "red",
-            "description": "Choose your favorite color."
-        }
-    }
-}
-```
-
-Options are exported as Feature-scoped environment variables.  The option name is captialized and sanitized according to [option resolution](https://containers.dev/implementors/features/#option-resolution).
-
-```bash
-#!/bin/bash
-
-echo "Activating feature 'color'"
-echo "The provided favorite color is: ${FAVORITE}"
-
-...
-```
+Options are exported as Feature-scoped environment variables. The option name is capitalized and sanitized according to [option resolution](https://containers.dev/implementors/features/#option-resolution).
 
 ## Distributing Features
 

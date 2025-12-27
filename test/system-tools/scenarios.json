@@ -1,0 +1,12 @@
+{
+    "custom-packages": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "system-tools": {
+                "packages": "ripgrep",
+                "excludePackages": "x11-apps"
+            }
+        },
+        "remoteUser": "vscode"
+    }
+}
