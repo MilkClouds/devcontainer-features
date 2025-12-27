@@ -68,35 +68,47 @@ passwd -d "$USERNAME" || true
 # Update package lists
 apt-get update
 
+exclude_packages="${EXCLUDE_PACKAGES:-}"
+exclude_packages="$(printf "%s\n" "$exclude_packages" | tr "," " ")"
+should_skip_package() {
+    local pkg="$1"
+    for excluded in $exclude_packages; do
+        [ "$pkg" = "$excluded" ] && return 0
+    done
+    return 1
+}
+install_packages() {
+    local selected=()
+    for pkg in "$@"; do
+        if ! should_skip_package "$pkg"; then
+            selected+=("$pkg")
+        fi
+    done
+    if [ "${#selected[@]}" -gt 0 ]; then
+        apt-get install -y --no-install-recommends "${selected[@]}"
+    fi
+}
+
 # Install system utilities and shell tools
-apt-get install -y --no-install-recommends \
-    sudo bash-completion zsh tmux \
-    htop tree locales
+install_packages sudo bash-completion zsh tmux htop tree locales
 
 # Install editors and text processing
-apt-get install -y --no-install-recommends \
-    vim vim-runtime nano
+install_packages vim vim-runtime nano
 
 # Install network and download tools
-apt-get install -y --no-install-recommends \
-    git curl wget aria2 openssh-client \
-    jq unzip rsync xz-utils
+install_packages git curl wget aria2 openssh-client jq unzip rsync xz-utils
 
 # Install development tools and libraries
-apt-get install -y --no-install-recommends \
-    build-essential \
-    libssl-dev zlib1g-dev libffi-dev \
-    libreadline-dev libsqlite3-dev libncursesw5-dev
+install_packages build-essential libssl-dev zlib1g-dev libffi-dev libreadline-dev libsqlite3-dev libncursesw5-dev
 
 # Install X11 applications and utilities
-apt-get install -y --no-install-recommends \
-    x11-apps xauth
+install_packages x11-apps xauth
 
 # Install optional extra packages
 extra_packages="${PACKAGES:-}"
 if [ -n "$extra_packages" ]; then
     extra_packages="$(printf "%s\n" "$extra_packages" | tr "," " ")"
-    apt-get install -y --no-install-recommends $extra_packages
+    install_packages $extra_packages
 fi
 
 # Generate locale and configure sudoers

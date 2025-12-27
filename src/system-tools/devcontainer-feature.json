@@ -23,6 +23,11 @@
       "type": "string",
       "default": "",
       "description": "Additional apt packages to install (space/comma-separated)"
+    },
+    "excludePackages": {
+      "type": "string",
+      "default": "",
+      "description": "Apt packages to skip from the default install list (space/comma-separated)"
     }
   }
 }
