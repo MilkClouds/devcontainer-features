@@ -1,6 +1,6 @@
 {
   "id": "python-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Python CLI tools",
   "description": "Install uv and Python-based CLI tools.",
   "options": {
@@ -11,11 +11,9 @@
     },
     "tools": {
       "type": "string",
-      "default": "",
-      "description": "Explicit space/comma-separated list of uv tools to install. When empty, installs the default set."
+      "default": "glances gpustat ruff tqdm ty",
+      "description": "Explicit space/comma-separated list of uv tools to install."
     }
   },
-  "installsAfter": [
-    "./system-tools"
-  ]
+  "installsAfter": []
 }

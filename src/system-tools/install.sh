@@ -84,7 +84,7 @@ passwd -d "$USERNAME" || true
 # Update package lists
 apt-get update
 
-exclude_packages="$(normalize_list "${EXCLUDE_PACKAGES:-}")"
+exclude_packages="$(normalize_list "${EXCLUDE_PACKAGES:-${EXCLUDEPACKAGES:-}}")"
 install_packages() {
     local selected=()
     local pkg

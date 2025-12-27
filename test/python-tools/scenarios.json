@@ -2,7 +2,7 @@
     "ruff-only": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "ghcr.io/MilkClouds/devcontainer-features/python-tools": {
+            "ghcr.io/MilkClouds/devcontainer-features/python-tools:0.1.2": {
                 "tools": "ruff"
             }
         },
@@ -11,7 +11,7 @@
     "multi-tools": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "ghcr.io/MilkClouds/devcontainer-features/python-tools": {
+            "ghcr.io/MilkClouds/devcontainer-features/python-tools:0.1.2": {
                 "tools": "tqdm ruff"
             }
         },

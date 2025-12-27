@@ -21,11 +21,10 @@ if ! command -v uv >/dev/null 2>&1; then
         curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-tool_list="${TOOLS:-}"
+tool_list="$(normalize_list "${TOOLS:-}")"
 if [ -z "$tool_list" ]; then
-    tool_list="tqdm gpustat glances ruff ty"
-else
-    tool_list="$(normalize_list "$tool_list")"
+    echo "No tools configured. Set the tools option to install uv tools." >&2
+    exit 0
 fi
 
 installed_tools="$(uv tool list 2>/dev/null | awk "{print \$1}")"

@@ -2,7 +2,7 @@
     "custom-theme": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "ghcr.io/MilkClouds/devcontainer-features/zsh-setup": {
+            "ghcr.io/MilkClouds/devcontainer-features/zsh-setup:0.1.2": {
                 "theme": "robbyrussell",
                 "plugins": "git"
             }

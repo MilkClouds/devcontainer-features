@@ -1,6 +1,6 @@
 {
   "id": "system-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "System tools",
   "description": "Create a dev user and install base OS packages.",
   "options": {
@@ -22,12 +22,12 @@
     "packages": {
       "type": "string",
       "default": "",
-      "description": "Additional apt packages to install (space/comma-separated)"
+      "description": "Additional apt packages to install (space/comma-separated). See src/system-tools/install.sh for the default package list."
     },
     "excludePackages": {
       "type": "string",
       "default": "",
-      "description": "Apt packages to skip from the default install list (space/comma-separated)"
+      "description": "Apt packages to skip from the default install list (space/comma-separated). See src/system-tools/install.sh for the default package list."
     }
   }
 }
