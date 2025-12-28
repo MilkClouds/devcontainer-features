@@ -39,6 +39,22 @@ Install uv and an explicit list of Python CLI tools.
 }
 ```
 
+### `miniforge`
+
+Install Miniforge (conda) into a configurable path.
+
+```jsonc
+{
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/feature-starter/miniforge:1": {
+            "version": "latest",
+            "installPath": "/opt/conda"
+        }
+    }
+}
+```
+
 ### `zsh-setup`
 
 Configure zsh, Oh My Zsh, and custom aliases.

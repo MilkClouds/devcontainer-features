@@ -1,0 +1,21 @@
+{
+  "id": "miniforge",
+  "version": "0.1.0",
+  "name": "Miniforge",
+  "description": "Install Miniforge (conda) into a configurable path.",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "Miniforge release tag (e.g. 24.7.0-0) or 'latest'."
+    },
+    "installPath": {
+      "type": "string",
+      "default": "/opt/conda",
+      "description": "Target path for the Miniforge installation."
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/MilkClouds/devcontainer-features/system-tools"
+  ]
+}

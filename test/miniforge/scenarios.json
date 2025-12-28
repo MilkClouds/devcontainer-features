@@ -1,0 +1,9 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "ghcr.io/MilkClouds/devcontainer-features/miniforge": {}
+        },
+        "remoteUser": "vscode"
+    }
+}
